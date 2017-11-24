@@ -18,7 +18,7 @@
 	// *** Basic settings (important!) ***
 	// ***********************************
 
-	define('SELF_URL_PATH', '{{ ttrss_domain }}');
+	define('SELF_URL_PATH', '{{ ttrss_url }}');
 	{% if ttrss_skip_url_path_checks %}
 
     define('_SKIP_SELF_URL_PATH_CHECKS', true);
@@ -110,7 +110,7 @@
 	// random people to access your tt-rss installation is a security risk
 	// and potentially might lead to data loss or server exploit. Disabled
 	// by default.
-	define('REG_NOTIFY_ADDRESS', '{{ ttrss_email }}');
+	define('REG_NOTIFY_ADDRESS', '');
 	// Email address to send new user notifications to.
 	define('REG_MAX_USERS', 10);
 	// Maximum amount of users which will be allowed to register on this
