@@ -1,0 +1,14 @@
+---
+
+- name: Download shaarli plugin
+  git:
+    repo: "{{ ttrss_shaarli_git_url }}"
+    dest: /home/ttrss/shaarli
+    version: "{{ ttrss_shaarli_version }}"
+    force: True
+
+- name: Link shaarli plugin
+  file:
+    state: link
+    src: /home/ttrss/shaarli/shaarli
+    dest: /opt/ttrss/plugins.local/shaarli

@@ -1,0 +1,17 @@
+---
+
+- name: Download theme
+  git:
+    repo: "{{ ttrss_feedly_git_url }}"
+    dest: /home/ttrss/feedly-theme/
+    version: "{{ ttrss_feedly_version }}"
+    force: yes
+
+- name: Link theme
+  file:
+    state: link
+    src: "/home/ttrss/feedly-theme/{{ item }}"
+    dest: "/opt/ttrss/themes/{{ item }}"
+  with_items:
+    - feedly.css
+    - feedly

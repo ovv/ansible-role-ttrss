@@ -1,0 +1,50 @@
+---
+
+- name: Clone source
+  git:
+    repo: "{{ ttrss_git_url }}"
+    dest: /opt/ttrss
+    version: "{{ ttrss_version }}"
+    force: true
+  notify:
+    - clear ttrss cache
+    - restart php
+
+- name: Configure
+  template:
+    dest: /opt/ttrss/config.php
+    src: opt/ttrss/config.php
+    owner: ttrss
+    group: ttrss
+    mode: 0600
+  notify:
+    - restart php
+
+- name: Permission
+  file:
+    state: directory
+    owner: ttrss
+    mode: 0755
+    path: "{{ item }}"
+  with_items:
+    - /opt/ttrss/cache/js
+    - /opt/ttrss/cache/export
+    - /opt/ttrss/cache/images
+    - /opt/ttrss/cache/upload
+    - /opt/ttrss/lock
+    - /opt/ttrss/feed-icons
+
+- name: Update cron
+  cron:
+    user: ttrss
+    name: ttrss_update
+    minute: '*/{{ ttrss_feed_update }}'
+    job: /usr/bin/php /opt/ttrss/update.php --feeds --quiet
+
+- import_tasks: feedly_theme.yml
+  when: ttrss_feedly
+
+- import_tasks: shaarli_plugin.yml
+  when: ttrss_shaarli
+
+- import_tasks: postgres.yml

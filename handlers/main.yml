@@ -1,0 +1,9 @@
+---
+
+- name: restart php
+  service:
+    name: php7.0-fpm
+    state: restarted
+
+- name: clear ttrss cache
+  command: find /opt/ttrss/cache -type f -user www-data -exec rm {} ';'

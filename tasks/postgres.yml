@@ -1,0 +1,27 @@
+---
+
+- name: Check database
+  shell: |
+    psql -h localhost -U {{ ttrss_db_user }} -tA -c "SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name ='ttrss_users')"
+  environment:
+    PGPASSWORD: '{{ ttrss_db_password }}'
+  register: ttrss_db
+  changed_when: ttrss_db.stdout == 'f'
+
+- name: Init db schema
+  shell: psql -h localhost -U ttrss -f /opt/ttrss/schema/ttrss_schema_pgsql.sql ttrss
+  environment:
+    PGPASSWORD: "{{ ttrss_db_password }}"
+  when: ttrss_db|changed
+
+- name: Create user sql
+  template:
+    src: home/ttrss/user.sql
+    dest: /home/ttrss/user.sql
+  register: ttrss_user_schema
+
+- name: Apply create user
+  shell: psql -h localhost -U ttrss -f /home/ttrss/user.sql
+  environment:
+    PGPASSWORD: "{{ ttrss_db_password }}"
+  when: ttrss_user_schema|changed or ttrss_db | changed

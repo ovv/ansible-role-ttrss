@@ -1,0 +1,14 @@
+---
+ttrss_git_url: https://tt-rss.org/gitlab/fox/tt-rss.git
+ttrss_version: master
+ttrss_feed_update: 5
+
+ttrss_feedly: True
+ttrss_feedly_git_url: https://github.com/levito/tt-rss-feedly-theme.git
+ttrss_feedly_version: master
+
+ttrss_shaarli: False
+ttrss_shaarli_git_url: https://github.com/ovv/tt-rss-shaarli.git
+ttrss_shaarli_version: master
+
+ttrss_skip_url_path_checks: False
