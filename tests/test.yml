@@ -1,0 +1,53 @@
+---
+- hosts: localhost
+  roles:
+    - ovv.php7
+    - pyslackers.postgres
+    - ansible-role-ttrss
+    - pyslackers.nginx
+  vars:
+    ttrss_salt: randomsalt
+    ttrss_crypt_key: rand24characterscryptkey
+    ttrss_user: admin
+    ttrss_password: password
+    ttrss_db_user: ttrss
+    ttrss_db_password: databasepassword
+    ttrss_domain: http://localhost
+    ttrss_email: ttrss@example.com
+
+    # ovv.php
+    custom_php_packages:
+      - php7.0-json
+      - php7.0-xml
+      - php7.0-gd
+      - php7.0-pgsql
+
+    php_pools:
+      ttrss:
+        socket: /var/run/php7.0-fpm-ttrss.sock
+        user: ttrss
+        createhome: yes
+        home: /home/ttrss
+        working_dir: /opt/ttrss
+
+    # pyslackers.nginx
+    nginx_sites:
+      ttrss:
+        directory: /opt/ttrss
+        locations:
+          php:
+            location: ~ \.php$
+            custom: |
+              fastcgi_split_path_info ^(.+\.php)(/.+)$;
+              fastcgi_pass unix:{{ php_pools['ttrss']['socket'] }};
+              fastcgi_index index.php;
+              include fastcgi.conf;
+          root:
+            location: /
+            custom: |
+              try_files $uri $uri/ =404;
+
+    # pyslackers.postgres
+    postgres_users:
+      ttrss:
+        password: databasepassword
