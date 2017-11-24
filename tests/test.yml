@@ -12,7 +12,7 @@
     ttrss_password: password
     ttrss_db_user: ttrss
     ttrss_db_password: databasepassword
-    ttrss_domain: http://localhost
+    ttrss_url: http://localhost
     ttrss_email: ttrss@example.com
 
     # ovv.php
