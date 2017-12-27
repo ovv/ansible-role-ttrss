@@ -31,6 +31,7 @@
         working_dir: /opt/ttrss
 
     # pyslackers.nginx
+    ufw_enabled: False  # UFW is not installed in test images
     nginx_sites:
       ttrss:
         directory: /opt/ttrss
