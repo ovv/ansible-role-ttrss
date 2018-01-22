@@ -87,15 +87,13 @@ Example Playbook
       ttrss:
         directory: /opt/ttrss
         locations:
-          php:
-            location: ~ \.php$
+          - location: ~ \.php$
             custom: |
               fastcgi_split_path_info ^(.+\.php)(/.+)$;
               fastcgi_pass unix:{{ php_pools['ttrss']['socket'] }};
               fastcgi_index index.php;
               include fastcgi.conf;
-          root:
-            location: /
+          - location: /
             custom: |
               try_files $uri $uri/ =404;
 

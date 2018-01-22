@@ -6,6 +6,8 @@
     dest: /home/ttrss/shaarli
     version: "{{ ttrss_shaarli_version }}"
     force: True
+  notify:
+    - restart php
 
 - name: Link shaarli plugin
   file:
