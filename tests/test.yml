@@ -14,6 +14,7 @@
     ttrss_db_password: databasepassword
     ttrss_url: http://localhost
     ttrss_email: ttrss@example.com
+    ttrss_feedly: False
 
     # ovv.php
     custom_php_packages:
