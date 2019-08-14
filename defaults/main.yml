@@ -1,5 +1,5 @@
 ---
-ttrss_git_url: https://tt-rss.org/gitlab/fox/tt-rss.git
+ttrss_git_url: https://git.tt-rss.org/git/tt-rss.git
 ttrss_version: master
 ttrss_feed_update: 5
 
